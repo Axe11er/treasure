@@ -8,6 +8,15 @@ function getRandomNumber(size) {
   return Math.floor(Math.random() * size);
 }
 
+var width = 400;
+var height = 400;
+var clicks = 0;
+var clicksLimit = 20;
+var target = {
+  x: getRandomNumber(width),
+  y: getRandomNumber(height)
+};
+
 function getDistance(event, target) {
   var diffX = event.offsetX - target.x;
   var diffY = event.offsetY - target.y;
@@ -17,34 +26,21 @@ function getDistance(event, target) {
 function getDistanceHint(distance) {
   if (distance < 10) {
     return "Очень очень горячо!";
-  }
-  else if (distance < 20) {
+  } else if (distance < 20) {
     return "Очень горячо!";
-  }
-  else if (distance < 60) {
+  } else if (distance < 50) {
     return "Горячо!";
-  }
-  else if (distance < 100) {
+  } else if (distance < 100) {
     return "Тепло";
-  }
-  else if (distance < 200) {
+  } else if (distance < 200) {
     return "Прохладно";
-  }
-  else if (distance < 350) {
+  } else if (distance < 350) {
     return "Холодно";
-  }
-  else {
+  } else {
     return "Попробуй поискать в другом месте";
   }
 }
-var width = 400;
-var height = 400;
-var clicks = 0;
-var clicksLimit = 20;
-var target = {
-  x: getRandomNumber(width)
-  , y: getRandomNumber(height)
-};
+
 $("#map").click(function (event) {
   clicks++;
   if (clicks > clicksLimit) {
@@ -56,6 +52,7 @@ $("#map").click(function (event) {
   $("#distance").text(distanceHint);
   $("#clicks-remaining").text("Осталось попыток " + (clicksLimit - clicks));
   if (distance < 8) {
-    alert("Ура! Ты нашел сундук с сокровищем" + "\n" + "Кликов сделано " + clicks);
+    alert("Ура! Ты нашел сундук с сокровищем" + "\n" + "В сундуке ничего не было, ты стал еще на одну ступеньку ближе к просветлению" + "\n" + "Кликов сделано " + clicks + "\n" + "Обнови страницу, чтобы начать заново");
+    clicks = 0;
   }
 });
